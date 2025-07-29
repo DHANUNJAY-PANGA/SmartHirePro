@@ -11,7 +11,9 @@ import {
   AcademicCapIcon,
   PlusIcon,
   TrashIcon,
-  EyeIcon
+  EyeIcon,
+  CheckCircleIcon,
+  XCircleIcon
 } from '@heroicons/react/24/outline';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadialBarChart, RadialBar } from 'recharts';
 import './App.css';
@@ -29,6 +31,10 @@ const SmartHirePro = () => {
   const [loading, setLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [jobDescription, setJobDescription] = useState('');
+  const [activeTab, setActiveTab] = useState('ats');
+  const [quizAnswers, setQuizAnswers] = useState({});
+  const [showQuizResults, setShowQuizResults] = useState(false);
+  const [showInterviewAnswers, setShowInterviewAnswers] = useState({});
 
   const { register, control, handleSubmit, setValue, watch, reset } = useForm({
     defaultValues: {
