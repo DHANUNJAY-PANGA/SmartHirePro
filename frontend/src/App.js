@@ -726,307 +726,454 @@ const SmartHirePro = () => {
           )}
         </div>
 
-        {/* Action Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <ChartBarIcon className="h-8 w-8 text-green-600 mb-4" />
-            <h3 className="font-semibold text-gray-900 mb-2">ATS Analysis</h3>
-            <p className="text-gray-600 text-sm mb-4">Check resume compatibility with ATS systems</p>
-            <button
-              onClick={runATSAnalysis}
-              disabled={loading}
-              className="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-50"
-            >
-              {loading ? 'Analyzing...' : 'Run Analysis'}
-            </button>
+        {/* Tab Navigation */}
+        <div className="bg-white rounded-xl shadow-lg mb-8">
+          <div className="border-b border-gray-200">
+            <nav className="flex space-x-8 px-6">
+              <button
+                onClick={() => setActiveTab('ats')}
+                className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                  activeTab === 'ats'
+                    ? 'border-green-500 text-green-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <ChartBarIcon className="h-5 w-5 inline mr-2" />
+                ATS Analysis
+              </button>
+              <button
+                onClick={() => setActiveTab('analysis')}
+                className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                  activeTab === 'analysis'
+                    ? 'border-orange-500 text-orange-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <LightBulbIcon className="h-5 w-5 inline mr-2" />
+                Resume Analysis
+              </button>
+              <button
+                onClick={() => setActiveTab('interview')}
+                className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                  activeTab === 'interview'
+                    ? 'border-purple-500 text-purple-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <ChatBubbleLeftRightIcon className="h-5 w-5 inline mr-2" />
+                Interview Prep
+              </button>
+              <button
+                onClick={() => setActiveTab('quiz')}
+                className={`py-4 px-2 border-b-2 font-medium text-sm ${
+                  activeTab === 'quiz'
+                    ? 'border-cyan-500 text-cyan-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <AcademicCapIcon className="h-5 w-5 inline mr-2" />
+                Technical Quiz
+              </button>
+            </nav>
           </div>
 
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <LightBulbIcon className="h-8 w-8 text-orange-600 mb-4" />
-            <h3 className="font-semibold text-gray-900 mb-2">Resume Analysis</h3>
-            <p className="text-gray-600 text-sm mb-4">Get pros, cons, and improvement tips</p>
-            <button
-              onClick={runResumeAnalysis}
-              disabled={loading}
-              className="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition duration-300 disabled:opacity-50"
-            >
-              {loading ? 'Analyzing...' : 'Analyze Resume'}
-            </button>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <ChatBubbleLeftRightIcon className="h-8 w-8 text-purple-600 mb-4" />
-            <h3 className="font-semibold text-gray-900 mb-2">Interview Prep</h3>
-            <p className="text-gray-600 text-sm mb-4">Generate mock interview questions</p>
-            <button
-              onClick={generateInterviewQuestions}
-              disabled={loading}
-              className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300 disabled:opacity-50"
-            >
-              {loading ? 'Generating...' : 'Generate Questions'}
-            </button>
-          </div>
-
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <AcademicCapIcon className="h-8 w-8 text-cyan-600 mb-4" />
-            <h3 className="font-semibold text-gray-900 mb-2">Technical Quiz</h3>
-            <p className="text-gray-600 text-sm mb-4">Test your technical knowledge</p>
-            <button
-              onClick={generateQuiz}
-              disabled={loading}
-              className="w-full px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition duration-300 disabled:opacity-50"
-            >
-              {loading ? 'Generating...' : 'Create Quiz'}
-            </button>
-          </div>
-        </div>
-
-        {/* Job Description Input for ATS Analysis */}
-        {atsAnalysis && (
-          <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
-            <h3 className="text-xl font-semibold text-gray-900 mb-4">Job Description (Optional)</h3>
-            <textarea
-              value={jobDescription}
-              onChange={(e) => setJobDescription(e.target.value)}
-              placeholder="Paste the job description here for better ATS keyword matching..."
-              rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4"
-            />
-            <button
-              onClick={runATSAnalysis}
-              disabled={loading}
-              className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300 disabled:opacity-50"
-            >
-              {loading ? 'Re-analyzing...' : 'Re-run ATS Analysis'}
-            </button>
-          </div>
-        )}
-
-        {/* Results */}
-        <div className="space-y-8">
-          {/* ATS Analysis Results */}
-          {atsAnalysis && (
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">ATS Analysis Results</h2>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div>
-                  <div className="flex items-center mb-4">
-                    <div className="relative w-32 h-32">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <RadialBarChart cx="50%" cy="50%" innerRadius="60%" outerRadius="90%" data={[{score: atsAnalysis.ats_score, fill: atsAnalysis.ats_score >= 70 ? '#10B981' : atsAnalysis.ats_score >= 50 ? '#F59E0B' : '#EF4444'}]}>
-                          <RadialBar dataKey="score" cornerRadius={10} />
-                        </RadialBarChart>
-                      </ResponsiveContainer>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-2xl font-bold text-gray-900">{atsAnalysis.ats_score}</span>
-                      </div>
+          {/* Tab Content */}
+          <div className="p-8">
+            {/* ATS Analysis Tab */}
+            {activeTab === 'ats' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">ATS Compatibility Analysis</h2>
+                  <p className="text-gray-600 mb-6">
+                    Analyze your resume's compatibility with Applicant Tracking Systems
+                  </p>
+                  
+                  {!atsAnalysis && (
+                    <div className="bg-gray-50 p-6 rounded-lg mb-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Job Description (Optional)</h3>
+                      <textarea
+                        value={jobDescription}
+                        onChange={(e) => setJobDescription(e.target.value)}
+                        placeholder="Paste the job description here for better ATS keyword matching..."
+                        rows={4}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent mb-4"
+                      />
                     </div>
-                    <div className="ml-6">
-                      <h3 className="text-xl font-semibold text-gray-900">ATS Score</h3>
-                      <p className="text-gray-600">
-                        {atsAnalysis.ats_score >= 70 ? 'Excellent' : atsAnalysis.ats_score >= 50 ? 'Good' : 'Needs Improvement'}
-                      </p>
-                    </div>
-                  </div>
+                  )}
+                  
+                  <button
+                    onClick={runATSAnalysis}
+                    disabled={loading}
+                    className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-50"
+                  >
+                    {loading ? 'Analyzing...' : atsAnalysis ? 'Re-run Analysis' : 'Run ATS Analysis'}
+                  </button>
                 </div>
 
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-3">Section Scores</h4>
-                  <div className="space-y-2">
-                    {Object.entries(atsAnalysis.section_scores || {}).map(([section, score]) => (
-                      <div key={section} className="flex justify-between items-center">
-                        <span className="capitalize text-gray-700">{section}</span>
-                        <div className="flex items-center">
-                          <div className="w-24 bg-gray-200 rounded-full h-2 mr-3">
-                            <div 
-                              className="bg-indigo-600 h-2 rounded-full" 
-                              style={{width: `${score}%`}}
-                            ></div>
+                {atsAnalysis && (
+                  <div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                      <div>
+                        <div className="flex items-center mb-4">
+                          <div className="relative w-32 h-32">
+                            <ResponsiveContainer width="100%" height="100%">
+                              <RadialBarChart cx="50%" cy="50%" innerRadius="60%" outerRadius="90%" data={[{score: atsAnalysis.ats_score, fill: atsAnalysis.ats_score >= 70 ? '#10B981' : atsAnalysis.ats_score >= 50 ? '#F59E0B' : '#EF4444'}]}>
+                                <RadialBar dataKey="score" cornerRadius={10} />
+                              </RadialBarChart>
+                            </ResponsiveContainer>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-2xl font-bold text-gray-900">{atsAnalysis.ats_score}</span>
+                            </div>
                           </div>
-                          <span className="text-sm font-medium text-gray-900">{score}%</span>
+                          <div className="ml-6">
+                            <h3 className="text-xl font-semibold text-gray-900">ATS Score</h3>
+                            <p className="text-gray-600">
+                              {atsAnalysis.ats_score >= 70 ? 'Excellent' : atsAnalysis.ats_score >= 50 ? 'Good' : 'Needs Improvement'}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-3 text-green-600">Matched Keywords</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {(atsAnalysis.matched_keywords || []).map((keyword, index) => (
-                      <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Section Scores</h4>
+                        <div className="space-y-2">
+                          {Object.entries(atsAnalysis.section_scores || {}).map(([section, score]) => (
+                            <div key={section} className="flex justify-between items-center">
+                              <span className="capitalize text-gray-700">{section}</span>
+                              <div className="flex items-center">
+                                <div className="w-24 bg-gray-200 rounded-full h-2 mr-3">
+                                  <div 
+                                    className="bg-indigo-600 h-2 rounded-full" 
+                                    style={{width: `${score}%`}}
+                                  ></div>
+                                </div>
+                                <span className="text-sm font-medium text-gray-900">{score}%</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
 
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-3 text-red-600">Missing Keywords</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {(atsAnalysis.missing_keywords || []).map((keyword, index) => (
-                      <span key={index} className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">
-                        {keyword}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {atsAnalysis.recommendations && atsAnalysis.recommendations.length > 0 && (
-                <div className="mt-8">
-                  <h4 className="font-semibold text-gray-900 mb-3">Recommendations</h4>
-                  <ul className="space-y-2">
-                    {atsAnalysis.recommendations.map((rec, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-indigo-600 mr-2">•</span>
-                        <span className="text-gray-700">{rec}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Resume Analysis Results */}
-          {resumeAnalysis && (
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Resume Analysis</h2>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div>
-                  <h4 className="font-semibold text-green-600 mb-4 text-lg">Strengths</h4>
-                  <ul className="space-y-2">
-                    {(resumeAnalysis.pros || []).map((pro, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-green-600 mr-2">✓</span>
-                        <span className="text-gray-700">{pro}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-red-600 mb-4 text-lg">Areas for Improvement</h4>
-                  <ul className="space-y-2">
-                    {(resumeAnalysis.cons || []).map((con, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-red-600 mr-2">×</span>
-                        <span className="text-gray-700">{con}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-semibold text-indigo-600 mb-4 text-lg">Suggestions</h4>
-                  <ul className="space-y-2">
-                    {(resumeAnalysis.suggestions || []).map((suggestion, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-indigo-600 mr-2">→</span>
-                        <span className="text-gray-700">{suggestion}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="text-center">
-                  <h4 className="font-semibold text-gray-900 mb-2">Readability Score</h4>
-                  <div className="text-3xl font-bold text-indigo-600">{resumeAnalysis.readability_score?.toFixed(1) || 0}</div>
-                  <p className="text-gray-600 text-sm">Flesch Reading Ease</p>
-                </div>
-                <div className="text-center">
-                  <h4 className="font-semibold text-gray-900 mb-2">Word Count</h4>
-                  <div className="text-3xl font-bold text-indigo-600">{resumeAnalysis.word_count || 0}</div>
-                  <p className="text-gray-600 text-sm">Total words</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Interview Questions */}
-          {interviewQuestions && (
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Interview Questions</h2>
-
-              <div className="space-y-8">
-                {Object.entries(interviewQuestions).map(([category, questions]) => (
-                  <div key={category}>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4 capitalize">
-                      {category.replace('_', ' ')}
-                    </h3>
-                    <div className="space-y-4">
-                      {questions.map((q, index) => (
-                        <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                          <div className="flex justify-between items-start mb-2">
-                            <span className="text-sm font-medium text-indigo-600">{q.category}</span>
-                            <span className={`text-xs px-2 py-1 rounded-full ${
-                              q.difficulty === 'Easy' ? 'bg-green-100 text-green-800' :
-                              q.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                              'bg-red-100 text-red-800'
-                            }`}>
-                              {q.difficulty}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3 text-green-600">Matched Keywords</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {(atsAnalysis.matched_keywords || []).map((keyword, index) => (
+                            <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                              {keyword}
                             </span>
-                          </div>
-                          <p className="text-gray-900">{q.question}</p>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+                      </div>
 
-          {/* Technical Quiz */}
-          {quiz && (
-            <div className="bg-white p-8 rounded-xl shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Technical Quiz</h2>
-              
-              <div className="space-y-6">
-                {(quiz.questions || []).map((q, index) => (
-                  <div key={index} className="p-6 bg-gray-50 rounded-lg">
-                    <div className="flex justify-between items-start mb-4">
-                      <h4 className="font-semibold text-gray-900">Question {index + 1}</h4>
-                      <span className="text-sm text-indigo-600 font-medium">{q.skill_category}</span>
-                    </div>
-                    <p className="text-gray-900 mb-4">{q.question}</p>
-                    <div className="space-y-2">
-                      {q.options.map((option, optIndex) => (
-                        <div 
-                          key={optIndex} 
-                          className={`p-3 rounded-lg border ${
-                            optIndex === q.correct_answer 
-                              ? 'bg-green-50 border-green-200 text-green-800' 
-                              : 'bg-white border-gray-200 text-gray-700'
-                          }`}
-                        >
-                          <span className="font-medium mr-2">{String.fromCharCode(65 + optIndex)}.</span>
-                          {option}
-                          {optIndex === q.correct_answer && (
-                            <span className="ml-2 text-green-600 font-medium">✓ Correct</span>
-                          )}
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3 text-red-600">Missing Keywords</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {(atsAnalysis.missing_keywords || []).map((keyword, index) => (
+                            <span key={index} className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">
+                              {keyword}
+                            </span>
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
-                    {q.explanation && (
-                      <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                        <p className="text-blue-800 text-sm">
-                          <span className="font-medium">Explanation:</span> {q.explanation}
-                        </p>
+
+                    {atsAnalysis.recommendations && atsAnalysis.recommendations.length > 0 && (
+                      <div>
+                        <h4 className="font-semibold text-gray-900 mb-3">Recommendations</h4>
+                        <ul className="space-y-2">
+                          {atsAnalysis.recommendations.map((rec, index) => (
+                            <li key={index} className="flex items-start">
+                              <span className="text-indigo-600 mr-2">•</span>
+                              <span className="text-gray-700">{rec}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     )}
                   </div>
-                ))}
+                )}
               </div>
-            </div>
-          )}
+            )}
+
+            {/* Resume Analysis Tab */}
+            {activeTab === 'analysis' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Resume Analysis</h2>
+                  <p className="text-gray-600 mb-6">
+                    Get detailed feedback on your resume's strengths and areas for improvement
+                  </p>
+                  <button
+                    onClick={runResumeAnalysis}
+                    disabled={loading}
+                    className="px-8 py-3 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 transition duration-300 disabled:opacity-50"
+                  >
+                    {loading ? 'Analyzing...' : resumeAnalysis ? 'Re-analyze Resume' : 'Analyze Resume'}
+                  </button>
+                </div>
+
+                {resumeAnalysis && (
+                  <div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                      <div>
+                        <h4 className="font-semibold text-green-600 mb-4 text-lg">Strengths</h4>
+                        <ul className="space-y-2">
+                          {(resumeAnalysis.pros || []).map((pro, index) => (
+                            <li key={index} className="flex items-start">
+                              <CheckCircleIcon className="h-5 w-5 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                              <span className="text-gray-700">{pro}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-red-600 mb-4 text-lg">Areas for Improvement</h4>
+                        <ul className="space-y-2">
+                          {(resumeAnalysis.cons || []).map((con, index) => (
+                            <li key={index} className="flex items-start">
+                              <XCircleIcon className="h-5 w-5 text-red-600 mr-2 mt-0.5 flex-shrink-0" />
+                              <span className="text-gray-700">{con}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-indigo-600 mb-4 text-lg">Suggestions</h4>
+                        <ul className="space-y-2">
+                          {(resumeAnalysis.suggestions || []).map((suggestion, index) => (
+                            <li key={index} className="flex items-start">
+                              <LightBulbIcon className="h-5 w-5 text-indigo-600 mr-2 mt-0.5 flex-shrink-0" />
+                              <span className="text-gray-700">{suggestion}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="text-center bg-indigo-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-gray-900 mb-2">Readability Score</h4>
+                        <div className="text-3xl font-bold text-indigo-600">{resumeAnalysis.readability_score?.toFixed(1) || 0}</div>
+                        <p className="text-gray-600 text-sm">Flesch Reading Ease</p>
+                      </div>
+                      <div className="text-center bg-cyan-50 p-6 rounded-lg">
+                        <h4 className="font-semibold text-gray-900 mb-2">Word Count</h4>
+                        <div className="text-3xl font-bold text-cyan-600">{resumeAnalysis.word_count || 0}</div>
+                        <p className="text-gray-600 text-sm">Total words</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Interview Prep Tab */}
+            {activeTab === 'interview' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Interview Preparation</h2>
+                  <p className="text-gray-600 mb-6">
+                    Get AI-generated interview questions based on your resume content
+                  </p>
+                  <button
+                    onClick={generateInterviewQuestions}
+                    disabled={loading}
+                    className="px-8 py-3 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition duration-300 disabled:opacity-50"
+                  >
+                    {loading ? 'Generating...' : interviewQuestions ? 'Generate New Questions' : 'Generate Questions'}
+                  </button>
+                </div>
+
+                {interviewQuestions && (
+                  <div className="space-y-8">
+                    {Object.entries(interviewQuestions).map(([category, questions]) => (
+                      <div key={category}>
+                        <h3 className="text-xl font-semibold text-gray-900 mb-4 capitalize">
+                          {category.replace('_', ' ')}
+                        </h3>
+                        <div className="space-y-4">
+                          {questions.map((q, index) => (
+                            <div key={index} className="bg-gray-50 p-6 rounded-lg">
+                              <div className="flex justify-between items-start mb-4">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-sm font-medium text-purple-600">{q.category}</span>
+                                  <span className={`text-xs px-2 py-1 rounded-full ${
+                                    q.difficulty === 'Easy' ? 'bg-green-100 text-green-800' :
+                                    q.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-red-100 text-red-800'
+                                  }`}>
+                                    {q.difficulty}
+                                  </span>
+                                </div>
+                                <button
+                                  onClick={() => toggleInterviewAnswer(category, index)}
+                                  className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+                                >
+                                  {showInterviewAnswers[`${category}_${index}`] ? 'Hide Sample Answer' : 'Show Sample Answer'}
+                                </button>
+                              </div>
+                              <p className="text-gray-900 font-medium mb-4">{q.question}</p>
+                              
+                              {showInterviewAnswers[`${category}_${index}`] && (
+                                <div className="mt-4 p-4 bg-white rounded-lg border-l-4 border-purple-500">
+                                  <h5 className="font-semibold text-purple-700 mb-2">Sample Answer:</h5>
+                                  <p className="text-gray-700 text-sm">
+                                    {/* Generate sample answers based on question type */}
+                                    {category === 'hr_questions' && 
+                                      "Focus on your achievements, align your answer with the company's values, and be specific about your contributions. Use the STAR method (Situation, Task, Action, Result) to structure your response."
+                                    }
+                                    {category === 'behavioral_questions' && 
+                                      "Use the STAR method to structure your answer. Describe a specific situation, explain the task you needed to accomplish, detail the actions you took, and highlight the positive results. Be honest and choose examples that showcase your skills."
+                                    }
+                                    {category === 'technical_questions' && 
+                                      "Provide a clear, structured answer demonstrating your technical knowledge. Explain your thinking process, mention best practices, and if applicable, discuss trade-offs or alternative approaches. Don't hesitate to ask clarifying questions."
+                                    }
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Technical Quiz Tab */}
+            {activeTab === 'quiz' && (
+              <div>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Technical Skills Quiz</h2>
+                  <p className="text-gray-600 mb-6">
+                    Test your technical knowledge with questions based on your resume skills
+                  </p>
+                  {!quiz && (
+                    <button
+                      onClick={generateQuiz}
+                      disabled={loading}
+                      className="px-8 py-3 bg-cyan-600 text-white font-semibold rounded-lg hover:bg-cyan-700 transition duration-300 disabled:opacity-50"
+                    >
+                      {loading ? 'Generating...' : 'Generate Quiz'}
+                    </button>
+                  )}
+                  
+                  {quiz && !showQuizResults && (
+                    <div className="flex gap-4 justify-center">
+                      <button
+                        onClick={() => {
+                          setShowQuizResults(true);
+                        }}
+                        disabled={Object.keys(quizAnswers).length !== quiz.questions?.length}
+                        className="px-8 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-50"
+                      >
+                        Submit Quiz ({Object.keys(quizAnswers).length}/{quiz.questions?.length || 0})
+                      </button>
+                      <button
+                        onClick={() => {
+                          setQuiz(null);
+                          setQuizAnswers({});
+                          setShowQuizResults(false);
+                        }}
+                        className="px-8 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition duration-300"
+                      >
+                        Generate New Quiz
+                      </button>
+                    </div>
+                  )}
+                  
+                  {showQuizResults && (
+                    <div className="bg-indigo-50 p-6 rounded-lg mb-6">
+                      <h3 className="text-2xl font-bold text-indigo-600 mb-2">Quiz Results</h3>
+                      <p className="text-3xl font-bold text-indigo-800">{calculateQuizScore()}%</p>
+                      <p className="text-gray-600">
+                        You got {Object.entries(quizAnswers).filter(([index, answer]) => 
+                          quiz.questions[parseInt(index)]?.correct_answer === answer
+                        ).length} out of {quiz.questions?.length || 0} questions correct
+                      </p>
+                      <button
+                        onClick={() => {
+                          setQuiz(null);
+                          setQuizAnswers({});
+                          setShowQuizResults(false);
+                        }}
+                        className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-300"
+                      >
+                        Take New Quiz
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {quiz && (
+                  <div className="space-y-6">
+                    {(quiz.questions || []).map((q, index) => (
+                      <div key={index} className="bg-white p-6 rounded-lg shadow-lg">
+                        <div className="flex justify-between items-start mb-4">
+                          <h4 className="font-semibold text-gray-900">Question {index + 1}</h4>
+                          <span className="text-sm text-cyan-600 font-medium">{q.skill_category}</span>
+                        </div>
+                        <p className="text-gray-900 mb-4 font-medium">{q.question}</p>
+                        
+                        <div className="space-y-2">
+                          {q.options.map((option, optIndex) => {
+                            const isSelected = quizAnswers[index] === optIndex;
+                            const isCorrect = optIndex === q.correct_answer;
+                            const showAnswer = showQuizResults;
+                            
+                            return (
+                              <button
+                                key={optIndex}
+                                onClick={() => !showQuizResults && handleQuizAnswer(index, optIndex)}
+                                disabled={showQuizResults}
+                                className={`w-full text-left p-3 rounded-lg border transition duration-200 ${
+                                  showAnswer
+                                    ? isCorrect
+                                      ? 'bg-green-50 border-green-200 text-green-800'
+                                      : isSelected && !isCorrect
+                                      ? 'bg-red-50 border-red-200 text-red-800'
+                                      : 'bg-gray-50 border-gray-200 text-gray-700'
+                                    : isSelected
+                                    ? 'bg-cyan-50 border-cyan-300 text-cyan-800'
+                                    : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-gray-100'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center">
+                                    <span className="font-medium mr-3">{String.fromCharCode(65 + optIndex)}.</span>
+                                    <span>{option}</span>
+                                  </div>
+                                  {showAnswer && isCorrect && (
+                                    <CheckCircleIcon className="h-5 w-5 text-green-600" />
+                                  )}
+                                  {showAnswer && isSelected && !isCorrect && (
+                                    <XCircleIcon className="h-5 w-5 text-red-600" />
+                                  )}
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                        
+                        {showQuizResults && q.explanation && (
+                          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                            <p className="text-blue-800 text-sm">
+                              <span className="font-medium">Explanation:</span> {q.explanation}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
