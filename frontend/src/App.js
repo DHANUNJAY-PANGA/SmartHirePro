@@ -107,6 +107,10 @@ const SmartHirePro = () => {
         
         setUploadedFile(file.name);
         setCurrentView('builder');
+        alert(`Successfully uploaded and parsed: ${file.name}`);
+      } else {
+        alert('File uploaded but could not be parsed automatically. You can still fill the form manually.');
+        setCurrentView('builder');
       }
     } catch (error) {
       console.error('Upload error:', error);
@@ -124,6 +128,35 @@ const SmartHirePro = () => {
     },
     multiple: false
   });
+
+  // Handle quiz answer selection
+  const handleQuizAnswer = (questionIndex, answerIndex) => {
+    setQuizAnswers(prev => ({
+      ...prev,
+      [questionIndex]: answerIndex
+    }));
+  };
+
+  // Calculate quiz score
+  const calculateQuizScore = () => {
+    if (!quiz?.questions) return 0;
+    let correct = 0;
+    quiz.questions.forEach((q, index) => {
+      if (quizAnswers[index] === q.correct_answer) {
+        correct++;
+      }
+    });
+    return Math.round((correct / quiz.questions.length) * 100);
+  };
+
+  // Toggle interview answer visibility
+  const toggleInterviewAnswer = (category, index) => {
+    const key = `${category}_${index}`;
+    setShowInterviewAnswers(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
   // AI Suggestions
   const getAISuggestions = async (jobRole) => {
