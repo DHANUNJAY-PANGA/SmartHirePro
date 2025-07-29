@@ -192,11 +192,55 @@ class SmartHireProTester:
                 "website": "https://sarahjohnson.dev"
             },
             "summary": "UPDATED: Senior Full Stack Developer with 5+ years of expertise in React, Node.js, and cloud technologies.",
-            "experience": [],
-            "education": [],
-            "skills": [],
-            "projects": [],
-            "certifications": []
+            "experience": [
+                {
+                    "title": "Senior Full Stack Developer",
+                    "company": "TechCorp Inc",
+                    "location": "San Francisco, CA",
+                    "start_date": "2022-01",
+                    "end_date": "Present",
+                    "description": "Led development of microservices architecture serving 1M+ users.",
+                    "is_current": True
+                }
+            ],
+            "education": [
+                {
+                    "degree": "Bachelor of Science in Computer Science",
+                    "institution": "University of California, Berkeley",
+                    "location": "Berkeley, CA",
+                    "start_date": "2016-08",
+                    "end_date": "2020-05",
+                    "gpa": "3.8",
+                    "relevant_coursework": "Data Structures, Algorithms"
+                }
+            ],
+            "skills": [
+                {
+                    "category": "Programming Languages",
+                    "skills": ["JavaScript", "Python", "TypeScript", "Java"]
+                },
+                {
+                    "category": "Frameworks",
+                    "skills": ["React", "Node.js", "Express", "Django"]
+                }
+            ],
+            "projects": [
+                {
+                    "name": "E-commerce Platform",
+                    "description": "Full-stack e-commerce application",
+                    "technologies": "React, Node.js, MongoDB",
+                    "github_link": "https://github.com/sarahjohnson/ecommerce",
+                    "live_link": "https://ecommerce-demo.sarahjohnson.dev"
+                }
+            ],
+            "certifications": [
+                {
+                    "name": "AWS Certified Solutions Architect",
+                    "issuer": "Amazon Web Services",
+                    "date": "2023-03",
+                    "credential_id": "AWS-SAA-123456"
+                }
+            ]
         }
         
         try:
