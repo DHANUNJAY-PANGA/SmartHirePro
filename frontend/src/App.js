@@ -302,11 +302,16 @@ const SmartHirePro = () => {
                 </button>
                 <div
                   {...getRootProps()}
-                  className="px-8 py-4 border-2 border-indigo-200 text-indigo-600 font-semibold rounded-xl hover:bg-indigo-50 transition duration-300 cursor-pointer text-center"
+                  className={`px-8 py-4 border-2 border-dashed text-indigo-600 font-semibold rounded-xl transition duration-300 cursor-pointer text-center ${
+                    isDragActive 
+                      ? 'border-indigo-400 bg-indigo-50' 
+                      : 'border-indigo-200 hover:bg-indigo-50 hover:border-indigo-300'
+                  }`}
                 >
                   <input {...getInputProps()} />
                   <DocumentArrowUpIcon className="h-5 w-5 inline mr-2" />
-                  Upload Existing Resume
+                  {isDragActive ? 'Drop your resume here' : 'Upload Existing Resume'}
+                  <p className="text-xs text-gray-500 mt-1">PDF or DOCX files</p>
                 </div>
               </div>
             </div>
